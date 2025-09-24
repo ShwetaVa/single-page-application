@@ -4,38 +4,202 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Orcaa — Tab SPA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto;background:#071426;color:#e6eef6}
-        /* HEADER */
-        header{
-            position:sticky;top:0;z-index:1000;
-            display:flex;justify-content:space-between;align-items:center;
-            padding:0.8rem 1.5rem;
-            background:rgba(15,23,36,0.85);
-            backdrop-filter:blur(10px);
-            box-shadow:0 2px 10px rgba(0,0,0,0.4);
+        :root {
+            --primary: #7bd389;
+            --primary-dark: #06211a;
+            --bg: #071426;
+            --bg-header: rgba(15,23,36,0.92);
+            --text: #e6eef6;
+            --text-muted: #cdd7e5;
+            --border: #23304a;
+            --shadow: 0 4px 24px rgba(0,0,0,0.18);
+            --radius: 14px;
+            --transition: 0.22s cubic-bezier(.4,0,.2,1);
         }
-        .brand{font-weight:700;font-size:1.2rem;color:#7bd389;letter-spacing:0.5px;cursor:pointer;text-decoration:none}
-        nav{display:flex;gap:0.5rem}
-        nav a{
-            padding:0.4rem 0.9rem;
-            border-radius:20px;
-            color:#cdd7e5;
-            font-weight:600;
-            text-decoration:none;
-            transition:all 0.25s ease;
+        html, body {
+            height: 100%;
         }
-        nav a:hover{background:rgba(255,255,255,0.08);color:#fff}
-        nav a.active{background:#7bd389;color:#06211a}
-        /* MAIN AREA */
-        #app{padding:2rem;min-height:calc(100vh - 70px)}
-        .btn{padding:0.6rem 1rem;border:none;border-radius:8px;cursor:pointer;font-weight:600}
-        .btn.primary{background:#7bd389;color:#06211a}
-        .btn.secondary{background:transparent;color:#9aa4b2;border:1px solid #9aa4b2}
-        /* Small animation for tab switch */
-        .fade{animation:fadeIn 0.4s ease}
-        @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-        iframe{max-width:100%;border-radius:12px}
+        body {
+            margin: 0;
+            font-family: 'Inter', system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            letter-spacing: 0.01em;
+        }
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            padding: 1.1rem 2rem; /* moderate space from edges */
+            background: var(--bg-header);
+            backdrop-filter: blur(16px);
+            box-shadow: var(--shadow);
+            border-bottom: 1px solid var(--border);
+        }
+        .brand {
+            font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+            font-weight: 800;
+            font-size: 2rem;
+            letter-spacing: 2px;
+            color: var(--primary);
+            text-shadow: 0 2px 12px rgba(123,211,137,0.10);
+            margin-right: 2rem;
+            transition: color 0.2s;
+            cursor: pointer;
+            user-select: none;
+            z-index: 2;
+        }
+        .brand:hover {
+            color: #fff;
+        }
+        nav {
+            left: 0;
+            right: 0;
+            margin: 0 auto;
+            display: flex;
+            gap: 0.7rem;
+            justify-content: center;
+            z-index: 1;
+        }
+        nav a {
+            padding: 0.5rem 1.2rem;
+            border-radius: 30px;
+            color: var(--text-muted);
+            font-weight: 600;
+            text-decoration: none;
+            font-size: 1.05rem;
+            transition: background var(--transition), color var(--transition), box-shadow var(--transition);
+            border: 1.5px solid transparent;
+        }
+        nav a:hover, nav a:focus {
+            background: rgba(255,255,255,0.10);
+            color: #fff;
+            border-color: var(--primary);
+            outline: none;
+        }
+        nav a.active {
+            background: var(--primary);
+            color: var(--primary-dark);
+            box-shadow: 0 2px 12px rgba(123,211,137,0.13);
+            border-color: var(--primary);
+        }
+        #app {
+            padding: 2.5rem 1.5rem 2.5rem 1.5rem;
+            min-height: calc(100vh - 80px);
+            max-width: 700px;
+            margin: 0 auto;
+            animation: fadeIn 0.5s;
+        }
+        h1, h2, h3 {
+            font-weight: 700;
+            margin-top: 0;
+            color: #fff;
+        }
+        h1 {
+            font-size: 2.3rem;
+            margin-bottom: 0.7rem;
+        }
+        h2 {
+            font-size: 1.6rem;
+            margin-bottom: 0.5rem;
+        }
+        h3 {
+            font-size: 1.15rem;
+            margin-bottom: 0.3rem;
+            color: var(--primary);
+        }
+        p, ul, li {
+            font-size: 1.05rem;
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+        ul {
+            padding-left: 1.2rem;
+            margin: 0.7rem 0 1.2rem 0;
+        }
+        .btn {
+            padding: 0.7rem 1.3rem;
+            border: none;
+            border-radius: var(--radius);
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1.05rem;
+            margin-right: 0.7rem;
+            margin-top: 0.7rem;
+            transition: background var(--transition), color var(--transition), box-shadow var(--transition);
+        }
+        .btn.primary {
+            background: var(--primary);
+            color: var(--primary-dark);
+            box-shadow: 0 2px 8px rgba(123,211,137,0.10);
+        }
+        .btn.primary:hover {
+            background: #9be6a7;
+        }
+        .btn.secondary {
+            background: transparent;
+            color: var(--text-muted);
+            border: 1.5px solid var(--border);
+        }
+        .btn.secondary:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+        .fade {
+            animation: fadeIn 0.5s;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(16px);}
+            to { opacity: 1; transform: translateY(0);}
+        }
+        iframe {
+            max-width: 100%;
+            border-radius: var(--radius);
+            box-shadow: 0 2px 16px rgba(0,0,0,0.18);
+            border: none;
+        }
+        form {
+            background: rgba(15,23,36,0.85);
+            padding: 1.5rem 1.2rem;
+            border-radius: var(--radius);
+            box-shadow: 0 2px 12px rgba(0,0,0,0.10);
+            margin-top: 1.2rem;
+        }
+        form input {
+            display: block;
+            margin: 14px 0;
+            padding: 12px;
+            width: 100%;
+            border-radius: 8px;
+            border: 1.5px solid var(--border);
+            background: #0f1724;
+            color: var(--text);
+            font-size: 1rem;
+            transition: border var(--transition), box-shadow var(--transition);
+        }
+        form input:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(123,211,137,0.13);
+        }
+        @media (max-width: 600px) {
+            header {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 1rem 1.1rem;
+            }
+            #app {
+                padding: 1.2rem 0.5rem;
+            }
+            form {
+                padding: 1rem 0.5rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -79,8 +243,6 @@
           <p>We believe design is more than an outcome — it’s a process of discovery. By listening deeply and creating thoughtfully, we bring clarity, purpose, and impact to every idea.</p>
           <h3>Our Approach</h3>
           <p>We translate possibilities into purposeful outcomes. With collaboration at our core, we bridge creativity and strategy to deliver solutions that resonate and endure.</p>
-
-
           <h3>Team Orcaa</h3>
           <ul>
             <li>Lead Designer — Design & Product Strategy</li>
@@ -95,18 +257,16 @@
           <h3>Start a Project</h3>
           <p>Let’s collaborate to bring your vision to life.<br>
              Fill out the form below or connect with us directly</p>
-          <p><strong>Email:</strong> <a href="mailto:orcaadesign@gmail.com">orcaadesign@gmail.com</a></p>
-
+          <p><strong>Email:</strong> <a href="mailto:orcaadesign@gmail.com" style="color:var(--primary)">orcaadesign@gmail.com</a></p>
           <form onsubmit="event.preventDefault();alert('Thanks — demo only!')" style="max-width:500px">
-            <input type="text" placeholder="Name" required style="display:block;margin:12px 0;padding:10px;width:100%;border-radius:8px;border:1px solid #444;background:#0f1724;color:#e6eef6">
-            <input type="text" placeholder="Service" required style="display:block;margin:12px 0;padding:10px;width:100%;border-radius:8px;border:1px solid #444;background:#0f1724;color:#e6eef6">
-            <input type="tel" placeholder="Phone" required style="display:block;margin:12px 0;padding:10px;width:100%;border-radius:8px;border:1px solid #444;background:#0f1724;color:#e6eef6">
-            <input type="email" placeholder="Mail" required style="display:block;margin:12px 0;padding:10px;width:100%;border-radius:8px;border:1px solid #444;background:#0f1724;color:#e6eef6">
+            <input type="text" placeholder="Name" required>
+            <input type="text" placeholder="Service" required>
+            <input type="tel" placeholder="Phone" required>
+            <input type="email" placeholder="Mail" required>
             <button class="btn primary" type="submit" style="margin-top:10px;width:100%">Send</button>
           </form>
-            <p style="margin-top:18px"><strong>Phone:</strong> +91 123456789</p>
+          <p style="margin-top:18px"><strong>Phone:</strong> +91 123456789</p>
         </div>
-
       `
     };
 
